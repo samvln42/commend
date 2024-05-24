@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+form {
+    width: 100%;
+}
+
+form .star span {
+    font-size: 1.5rem;
+    color: #ffc743;
+}
+
+form .commend {
+    display: flex;
+    align-items: end;
+}
+form .commend .multiline-input {
+    width: 300px;
+    border: 1px solid #ccc;
+    overflow-y: hidden;
+    resize: none;
+    padding-top: 1rem;
+    border-radius: 7px;
+}
+
+form .commend .multiline-input:focus{
+    outline: none;
+}
+
+form .commend button {
+    position: relative;
+    height: 1rem;
+    background: #ffc743;
+}
+
+.star {
+    color: #ffc743;
+}
