@@ -15,10 +15,6 @@ const AddNoteForm = () => {
   const [loading, setLoading] = useState(true);
 
   const handleChange = (e) => {
-    if (note.rating < 1) {
-      e.preventDefault();
-      return;
-    }
     setNote({ ...note, [e.target.name]: e.target.value });
     adjustTextareaHeight(e.target);
   };
@@ -34,7 +30,9 @@ const AddNoteForm = () => {
 
   const fetchNotes = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/notes/");
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_DJANGO}/api/notes/`
+      );
       setNotes(response.data);
     } catch (error) {
       console.error("Error fetching notes:", error);
@@ -48,12 +46,15 @@ const AddNoteForm = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8000/api/notes/", {
-        storeid,
-        productid,
-        userid,
-        ...note,
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_DJANGO}/api/notes/`,
+        {
+          storeid,
+          productid,
+          userid,
+          ...note,
+        }
+      );
 
       setNote({
         commend: "",
@@ -114,9 +115,13 @@ const AddNoteForm = () => {
           {notes.map((item) => (
             <li key={item.id}>
               <p className="star">
-                {/* Display rating star */}
-                {[...Array(item.rating)].map((_, index) => "★").join("")}
-                {[...Array(5 - item.rating)].map((_, index) => "☆").join("")}
+                {/* Display rating stars */}
+                {Array.from({ length: item.rating }, (_, index) => (
+                  <span key={index}>★</span>
+                ))}
+                {Array.from({ length: 5 - item.rating }, (_, index) => (
+                  <span key={index}>☆</span>
+                ))}
               </p>
               <strong>Writer:</strong> {item.userid}, <strong>Comment:</strong>{" "}
               {item.commend}
